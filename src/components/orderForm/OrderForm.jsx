@@ -3,6 +3,8 @@ import { Form, FormField, Input } from './OrderForm.styled';
 const initialValues = {
     name: '',
     email: '',
+    phone: '',
+    address: '',
 };
 
 export const OrderForm = () => {

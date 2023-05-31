@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import { ShopsBar } from "components/shopsBar/ShopsBar";
 import { FoodList } from "components/foodList/FoodList";
 import { getFood } from "services/API";
@@ -24,7 +25,8 @@ const ShopPage = () => {
             }
         }
         getFoodsData();
-    }, [currentShop])
+    }, [currentShop]);
+
     return (<div><ShopsBar onClick={toChooseShop} />
         <FoodList food={food} /></div>)
 }

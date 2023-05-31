@@ -5,11 +5,13 @@ import { Field } from "formik";
 export const Form = styled(FormikForm)`
 width: 300px;
 padding: 30px;
-background-color:#E0FFFF;
 margin-right:auto;
 margin-left:auto;
-border: 1px solid #008080;
-border-radius:3px;
+margin-top:30px;
+background-image: linear-gradient(to bottom, #008080
+0%, #008080 69%, #E0FFFF 100%);
+ box-shadow: -3px 7px 21px 0 rgba(0, 0, 0, 0.23);
+ border-radius: 21px;
 display: flex;
 flex-direction: column;
 gap: 10px;`
@@ -17,7 +19,7 @@ gap: 10px;`
 export const FormField = styled.label`
 display: flex;
 flex-direction: column;
-color: #696969;
+color: #fff;
 font-size:24px;
 font-weight: 600;`
 export const Input = styled(Field)`
