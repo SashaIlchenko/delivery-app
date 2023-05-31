@@ -6,7 +6,8 @@ const BascetPage = () => {
     display: flex;
     align-items: flex-start;`
     return <Container><OrderForm />
-        <OrderList /></Container>
+        <OrderList />
+    </Container>
 }
 
 export default BascetPage;

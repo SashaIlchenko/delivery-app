@@ -13,14 +13,27 @@ import {
 
 export const OrderList = () => {
     const [currentOrder, setCurrentorder] = useState([]);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 0);
+    // const [currentPrice, setCurrentPrice] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem('order'));
         setCurrentorder(data);
     }, []);
     useEffect(() => {
         localStorage.setItem('order', JSON.stringify(currentOrder))
-    }, [currentOrder])
+        localStorage.setItem('count', JSON.stringify(count))
+        const getTotalPrice = () => {
+            let sum = 0;
+            console.log(currentOrder)
+            for (const item of currentOrder) {
+                sum += item.price;
+                return setTotalPrice(sum)
+            }
+        }
+        getTotalPrice();
+
+    }, [currentOrder, count])
 
     const handleIncrement = itemId => {
         setCount(prevCounts => ({
@@ -77,8 +90,10 @@ export const OrderList = () => {
                         </CounterWrapper>
                         <DeleteBtn type='button' onClick={() => handleDeleteBtn(order.id)}>Delete</DeleteBtn>
                     </Item>
+
                 })
             }</OrderListStyle> : "Please, add products!"}
+            <p>Total price: {totalPrice} </p>
         </div>
     )
 }
