@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
 
 export const NavBar = styled.nav`
-padding: 15px;`
+padding: 15px;
+border-bottom: 2px solid #008080;`
 
 
 export const Link = styled(NavLink)`

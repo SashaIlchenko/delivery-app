@@ -1,6 +1,13 @@
-export const ShopsBar = () => {
-    return (<div><button type='button'>MC Pizza</button>
-        <button type='button'>MC donny</button>
-        <button type='button'>Sushi yam</button>
-    </div>)
+// import { useState } from "react";
+import { BtnWrapper, ShopBtn } from "./ShopsBar.styled"
+export const ShopsBar = ({ onClick }) => {
+
+    const handleClick = (event) => {
+
+        onClick(event.target.innerText)
+    }
+    return (<BtnWrapper><ShopBtn type='button' onClick={handleClick}>MC Pizza</ShopBtn>
+        <ShopBtn type='button'>MC donny</ShopBtn>
+        <ShopBtn type='button'>Sushi yam</ShopBtn>
+    </BtnWrapper>)
 }

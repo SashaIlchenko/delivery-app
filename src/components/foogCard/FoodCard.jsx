@@ -1,5 +1,8 @@
 // import { useState } from 'react';
+import { Item, Wrapper, Photo, FoodInfo, OrderBtn } from "./FoodCard.styled"
 
-export const FoodCard = () => {
-    return (<li><img src="*" alt="future img" /><button type='button'>To Cart</button></li>)
+export const FoodCard = ({ food, onClick }) => {
+    return (< Item><Wrapper>
+        <Photo src={food.photo} alt={food.title} /></Wrapper>
+        <FoodInfo>{food.title}</FoodInfo><OrderBtn type='button' onClick={() => onClick(food)}>To Cart</OrderBtn></ Item>)
 }
