@@ -77,7 +77,7 @@ export const InputCounter = styled.input`
 
 export const DeleteBtn = styled.button`
 margin-top:20px;
-width: 100px;
+width: 50px;
 margin-left: auto;
 margin-right: auto;
 color: #373737;
@@ -92,3 +92,8 @@ border-radius: 10.31px;
     background-color: #5CD3A8;
   }
 `
+
+export const TotalPriceLabel = styled.p`
+font-size:24px;
+font-weight: 600;
+margin-top: 30px;`

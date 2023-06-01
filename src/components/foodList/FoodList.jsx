@@ -22,7 +22,8 @@ export const FoodList = ({ food, onClick }) => {
     return (
         // <div><div><h1>Please, choose shop</h1></div>
         <FoodListStyle>{food.map(item => {
-            return <FoodCard key={item.id} food={item} onClick={handleClick} />
+            return <FoodCard key={item._id} food={item} onClick={handleClick} />
         })}</FoodListStyle>
     )
 }
+

@@ -7,9 +7,17 @@ const initialValues = {
     address: '',
 };
 
-export const OrderForm = () => {
+export const OrderForm = ({ onSubmit }) => {
+
+    console.log(initialValues)
     return (<Formik
         initialValues={initialValues}
+        onSubmit={(values, { resetForm }) => {
+            onSubmit({
+                ...values,
+            })
+            resetForm();
+        }}
     >
         <Form>
             < FormField>Name
@@ -34,23 +42,24 @@ export const OrderForm = () => {
             < FormField>Phone
                 <Input
                     type="tel"
-                    name="number"
+                    name="phone"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                     required
-                    placeholder="Number"
+                    placeholder="phone"
                 />
             </ FormField>
             < FormField>Adress
                 <Input
-                    type="adress"
-                    name="adress"
+                    type="address"
+                    name="address"
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
                     title="Adress must be comtain the city and street"
                     required
-                    placeholder="adress"
+                    placeholder="address"
                 />
             </ FormField>
+            <button type="submit">Add contact</button>
         </Form>
     </Formik>)
 }
