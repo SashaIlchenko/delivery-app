@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { FoodListStyle } from "./FoodList.styled";
 import { toast } from "react-hot-toast";
 
-export const FoodList = ({ food, onClick }) => {
+export const FoodList = ({ food }) => {
     const [orderFood, setOrderFood] = useState(() => JSON.parse(localStorage.getItem('order')) || []);
     useEffect(() => {
         localStorage.setItem('order', JSON.stringify(orderFood));

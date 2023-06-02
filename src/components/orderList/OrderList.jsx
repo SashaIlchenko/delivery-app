@@ -17,17 +17,16 @@ import { toast } from "react-hot-toast";
 import { addOrder } from "services/API";
 
 export const OrderList = ({ user }) => {
-    const [currentOrder, setCurrentorder] = useState(JSON.parse(localStorage.getItem('order')) || []);
+    const [currentOrder, setCurrentorder] = useState([]);
     const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [load, setLoad] = useState(false);
-    // useEffect(() => {
-    //     const data = JSON.parse(localStorage.getItem('order'));
-    //     setCurrentorder(data);
-    //     ;
-    // }, []);
     useEffect(() => {
-        localStorage.setItem('order', JSON.stringify(currentOrder))
+        const data = JSON.parse(localStorage.getItem('order'));
+        setCurrentorder(data);
+        ;
+    }, []);
+    useEffect(() => {
         localStorage.setItem('count', JSON.stringify(count))
         const price = currentOrder.reduce((acc, item) => Number(acc + item.price * count[item._id]), 0);
         setTotalPrice(price)
@@ -64,6 +63,7 @@ export const OrderList = ({ user }) => {
         }
         try {
             await addOrder({ user, currentOrder, count, totalPrice });
+            setCurrentorder([]);
             setLoad(true);
             setCount(0);
             setTotalPrice(0);
@@ -74,7 +74,7 @@ export const OrderList = ({ user }) => {
     }
     return (
         <div>
-            {currentOrder.length ? <OrderListStyle> {
+            {!load ? <OrderListStyle> {
                 currentOrder.map(order => {
                     return <Item key={order._id}>
                         <Wrapper><Photo src={order.photo} alt={order.title} /></Wrapper>
