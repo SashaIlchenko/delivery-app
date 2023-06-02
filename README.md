@@ -7,6 +7,7 @@ From the list you can add a product to cart and go to the second page - cart. He
 
 Stack technologies and libraries:
 React, Git, emotion-styled,  axios ,formik, nanoid, router-dom and other.
+Command: npm start 
     
 
 Backend: 
@@ -18,7 +19,7 @@ Also  implemented  part of the user authorization with tokens, which will make s
 Stack technologies and libraries: 
 Node.js, express, MongoDB, Mondoose, Joi Schema and other.
 
-Repo URL Frontend: [https://github.com/SashaIlchenko/delivery-app]
+Repo URL Frontend: [https://github.com/SashaIlchenko/delivery-app] 
 
 Live Page Frontend: [https://sashailchenko.github.io/delivery-app/]
 
