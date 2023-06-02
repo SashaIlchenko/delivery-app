@@ -1,5 +1,11 @@
+import React from "react";
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+} from "use-places-autocomplete";
+import useOnclickOutside from "react-cool-onclickoutside";
 import { Formik } from "formik";
-import { Form, FormField, Input } from './OrderForm.styled';
+import { Form, FormField, Input, AddBtn } from './OrderForm.styled';
 import { nanoid } from 'nanoid';
 const initialValues = {
     name: '',
@@ -8,15 +14,63 @@ const initialValues = {
     address: '',
 };
 
-export const OrderForm = ({ onSubmit }) => {
+export const OrderForm = ({ onSubmit, isLoaded }) => {
+    const {
+        init,
+        ready,
+        value,
+        suggestions: { status, data },
+        setValue,
+        clearSuggestions,
+    } = usePlacesAutocomplete({
+        callbackName: "YOUR_CALLBACK_NAME",
+    });
+    const ref = useOnclickOutside(() => {
+        clearSuggestions();
+    });
+
+    const handleInput = (e) => {
+        setValue(e.target.value);
+    };
+
+    const handleSelect =
+        ({ description }) =>
+            () => {
+                setValue(description, false);
+                clearSuggestions();
+                getGeocode({ address: description }).then((results) => {
+                    const { lat, lng } = getLatLng(results[0]);
+                    console.log({ lat, lng })
+
+                });
+            };
+
+    const renderSuggestions = () =>
+        data.map((suggestion) => {
+            const {
+                place_id,
+                structured_formatting: { main_text, secondary_text },
+            } = suggestion;
+
+            return (
+                <li key={place_id} onClick={handleSelect(suggestion)}>
+                    <strong>{main_text}</strong> <small>{secondary_text}</small>
+                </li>
+            );
+        });
+    React.useEffect(() => {
+        if (isLoaded) {
+            init()
+        }
+    }, [isLoaded, init])
     return (<Formik
         initialValues={initialValues}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values) => {
+
             onSubmit({
                 id: nanoid(),
                 ...values,
             })
-            resetForm();
         }}
     >
         <Form>
@@ -33,6 +87,7 @@ export const OrderForm = ({ onSubmit }) => {
                 <Input
                     type="email"
                     name="email"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
                     title="Email contain @"
                     required
                     placeholder="email"
@@ -48,17 +103,18 @@ export const OrderForm = ({ onSubmit }) => {
                     placeholder="phone"
                 />
             </ FormField>
-            < FormField>Adress
-                <Input
-                    type="address"
-                    name="address"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
-                    title="Adress must be comtain the city and street"
-                    required
-                    placeholder="address"
-                />
-            </ FormField>
-            <button type="submit">Add contact</button>
+            <div ref={ref}>
+                < FormField>Adress
+                    <Input
+                        value={value}
+                        onChange={handleInput}
+                        disabled={!ready}
+                        placeholder="Where are you going?"
+                    />
+                </ FormField>
+                {status === "OK" && <ul>{renderSuggestions()}</ul>}</div>
+            <AddBtn type="submit">Add contacts</AddBtn>
         </Form>
     </Formik>)
 }
+

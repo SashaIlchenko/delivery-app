@@ -33,7 +33,7 @@ const ShopPage = () => {
     }
 
     return (<div><ShopsBar onClick={toChooseShop} />
-        {!currentShop.length && <div><h1>Please, choose shop</h1></div>}
+        {!currentShop.length && <div ><h1 className="title">Please, choose a shop!</h1></div>}
         {filterFood && <FoodList food={filterFood} />}</div>)
 }
 export default ShopPage;

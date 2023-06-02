@@ -9,21 +9,23 @@ import {
     CounterBtn,
     InputCounter,
     DeleteBtn,
-    TotalPriceLabel
+    TotalPriceLabel,
+    SubBtn
 } from "./OrderList.styled";
 import { FiTrash2 } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 import { addOrder } from "services/API";
 
 export const OrderList = ({ user }) => {
-    const [currentOrder, setCurrentorder] = useState([]);
-    const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 1);
+    const [currentOrder, setCurrentorder] = useState(JSON.parse(localStorage.getItem('order')) || []);
+    const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 0);
     const [totalPrice, setTotalPrice] = useState(0);
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('order'));
-        setCurrentorder(data);
-        ;
-    }, []);
+    const [load, setLoad] = useState(false);
+    // useEffect(() => {
+    //     const data = JSON.parse(localStorage.getItem('order'));
+    //     setCurrentorder(data);
+    //     ;
+    // }, []);
     useEffect(() => {
         localStorage.setItem('order', JSON.stringify(currentOrder))
         localStorage.setItem('count', JSON.stringify(count))
@@ -60,19 +62,19 @@ export const OrderList = ({ user }) => {
         if (!user) {
             return toast.error('Please, type all inputs of form')
         }
-        const orderData = [];
-        orderData.push({ user }, { currentOrder, count, totalPrice });
         try {
-            return await addOrder({ user, currentOrder, count, totalPrice });
+            await addOrder({ user, currentOrder, count, totalPrice });
+            setLoad(true);
+            setCount(0);
+            setTotalPrice(0);
         } catch (error) {
             console.log(error)
         }
-        console.log({ user, currentOrder, count, totalPrice })
 
     }
     return (
         <div>
-            {currentOrder ? <OrderListStyle> {
+            {currentOrder.length ? <OrderListStyle> {
                 currentOrder.map(order => {
                     return <Item key={order._id}>
                         <Wrapper><Photo src={order.photo} alt={order.title} /></Wrapper>
@@ -100,11 +102,11 @@ export const OrderList = ({ user }) => {
                         </CounterWrapper>
                         <DeleteBtn type='button' onClick={() => handleDeleteBtn(order._id)}><FiTrash2 /></DeleteBtn>
                     </Item>
-
                 })
-            }</OrderListStyle> : "Please, add products!"}
-            <TotalPriceLabel>Total price: {totalPrice || "Please, select count of all orders"} </TotalPriceLabel>
-            <button type='submit' onClick={handleSubClick}>Sumbit</button>
+            }</OrderListStyle> : <h1 className="title">"Please, add products!"</h1>}
+            {!currentOrder.length || <><TotalPriceLabel>Total price: {totalPrice || "Please, select count of all orders"}</TotalPriceLabel>
+                <SubBtn type='submit' onClick={handleSubClick}>Sumbit</SubBtn></>}
+            {load && <h1 className="title">Thank you {user.name} for your odrder number "{user.id}". We will contact you soon.</h1>}
         </div>
     )
 }
