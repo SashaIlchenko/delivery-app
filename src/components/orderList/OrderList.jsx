@@ -74,7 +74,7 @@ export const OrderList = ({ user }) => {
     }
     return (
         <div>
-            {!load ? <OrderListStyle> {
+            {!load && <OrderListStyle> {
                 currentOrder.map(order => {
                     return <Item key={order._id}>
                         <Wrapper><Photo src={order.photo} alt={order.title} /></Wrapper>
@@ -103,8 +103,9 @@ export const OrderList = ({ user }) => {
                         <DeleteBtn type='button' onClick={() => handleDeleteBtn(order._id)}><FiTrash2 /></DeleteBtn>
                     </Item>
                 })
-            }</OrderListStyle> : <h1 className="title">"Please, add products!"</h1>}
-            {!currentOrder.length || <><TotalPriceLabel>Total price: {totalPrice || "Please, select count of all orders"}</TotalPriceLabel>
+            }</OrderListStyle>}
+            {!currentOrder.length && <h1 className="title">"Please, add products!"</h1>}
+            {currentOrder.length && <><TotalPriceLabel>Total price: {totalPrice || "Please, select count of all orders"}</TotalPriceLabel>
                 <SubBtn type='submit' onClick={handleSubClick}>Sumbit</SubBtn></>}
             {load && <h1 className="title">Thank you {user.name} for your odrder number "{user.id}". We will contact you soon.</h1>}
         </div>
