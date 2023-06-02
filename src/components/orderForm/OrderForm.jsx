@@ -15,7 +15,6 @@ export const OrderForm = ({ onSubmit }) => {
             onSubmit({
                 id: nanoid(),
                 ...values,
-
             })
             resetForm();
         }}
@@ -34,7 +33,6 @@ export const OrderForm = ({ onSubmit }) => {
                 <Input
                     type="email"
                     name="email"
-                    pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
                     title="Email contain @"
                     required
                     placeholder="email"
