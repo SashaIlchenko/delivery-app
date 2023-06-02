@@ -1,13 +1,12 @@
 import { useState } from "react";
-
 import { OrderForm } from "components/orderForm/OrderForm";
 import { OrderList } from "components/orderList/OrderList";
 import styled from "@emotion/styled";
 const BascetPage = () => {
 
-    const [submitData, setSubmitData] = useState([]);
+    const [submitData, setSubmitData] = useState(null);
     const onSubmit = (values) => {
-        setSubmitData(p => [...p, values]);
+        setSubmitData(values);
 
     }
     console.log(submitData)

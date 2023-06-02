@@ -1,19 +1,15 @@
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:3001/api/products/';
+const BASE_URL = 'http://localhost:3001/api/';
 
 export async function getFood() {
-    const response = await axios.get(`${BASE_URL}`);
-    return response.data;
-}
-export async function getCurrentShop(value) {
-    const response = await axios.get(`${BASE_URL}?shop=${value}`);
+    const response = await axios.get(`${BASE_URL}products/`);
     return response.data;
 }
 
-// export async function updateFoods(id, followers) {
-//     const response = await axios.put(`${BASE_URL}/${id}`, {
-//         price,
-//     })
-//     return response.data;
-// }
+export async function addOrder(values) {
+    const response = await axios.post(`${BASE_URL}orders/`, { ...values });
+
+    return response.data;
+}
+

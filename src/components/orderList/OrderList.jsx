@@ -12,21 +12,23 @@ import {
     TotalPriceLabel
 } from "./OrderList.styled";
 import { FiTrash2 } from "react-icons/fi";
+import { toast } from "react-hot-toast";
+import { addOrder } from "services/API";
 
 export const OrderList = ({ user }) => {
     const [currentOrder, setCurrentorder] = useState([]);
-    const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 0);
-    // const [currentPrice, setCurrentPrice] = useState([]);
+    const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 1);
     const [totalPrice, setTotalPrice] = useState(0);
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem('order'));
         setCurrentorder(data);
+        ;
     }, []);
     useEffect(() => {
         localStorage.setItem('order', JSON.stringify(currentOrder))
         localStorage.setItem('count', JSON.stringify(count))
-        const price = currentOrder.reduce((acc, item) => acc + item.price * count[item._id], 0);
-        setTotalPrice(price);
+        const price = currentOrder.reduce((acc, item) => Number(acc + item.price * count[item._id]), 0);
+        setTotalPrice(price)
     }, [currentOrder, count])
 
     const handleIncrement = itemId => {
@@ -53,12 +55,26 @@ export const OrderList = ({ user }) => {
         for (const item of object) {
             return Number(item.price) * count[itemId];
         }
+    };
+    const handleSubClick = async () => {
+        if (!user) {
+            return toast.error('Please, type all inputs of form')
+        }
+        const orderData = [];
+        orderData.push({ user }, { currentOrder, count, totalPrice });
+        try {
+            return await addOrder({ user, currentOrder, count, totalPrice });
+        } catch (error) {
+            console.log(error)
+        }
+        console.log({ user, currentOrder, count, totalPrice })
+
     }
     return (
         <div>
             {currentOrder ? <OrderListStyle> {
                 currentOrder.map(order => {
-                    return <Item key={order.id}>
+                    return <Item key={order._id}>
                         <Wrapper><Photo src={order.photo} alt={order.title} /></Wrapper>
                         <div><FoodInfo>Price: {changePrice(order._id) || order.price}</FoodInfo>
                             <FoodInfo>{order.title}</FoodInfo></div>
@@ -87,8 +103,8 @@ export const OrderList = ({ user }) => {
 
                 })
             }</OrderListStyle> : "Please, add products!"}
-            <TotalPriceLabel>Total price: {totalPrice} </TotalPriceLabel>
-            <button type='submit'>Sumbit</button>
+            <TotalPriceLabel>Total price: {totalPrice || "Please, select count of all orders"} </TotalPriceLabel>
+            <button type='submit' onClick={handleSubClick}>Sumbit</button>
         </div>
     )
 }

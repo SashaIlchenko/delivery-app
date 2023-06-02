@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { ShopsBar } from "components/shopsBar/ShopsBar";
 import { FoodList } from "components/foodList/FoodList";
 import { getFood } from "services/API";
@@ -34,6 +33,7 @@ const ShopPage = () => {
     }
 
     return (<div><ShopsBar onClick={toChooseShop} />
-        {filterFood ? <FoodList food={filterFood} /> : <FoodList food={food} />}</div>)
+        {!currentShop.length && <div><h1>Please, choose shop</h1></div>}
+        {filterFood && <FoodList food={filterFood} />}</div>)
 }
 export default ShopPage;

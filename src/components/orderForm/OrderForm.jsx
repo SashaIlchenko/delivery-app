@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import { Form, FormField, Input } from './OrderForm.styled';
+import { nanoid } from 'nanoid';
 const initialValues = {
     name: '',
     email: '',
@@ -8,13 +9,13 @@ const initialValues = {
 };
 
 export const OrderForm = ({ onSubmit }) => {
-
-    console.log(initialValues)
     return (<Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
             onSubmit({
+                id: nanoid(),
                 ...values,
+
             })
             resetForm();
         }}
@@ -33,7 +34,7 @@ export const OrderForm = ({ onSubmit }) => {
                 <Input
                     type="email"
                     name="email"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
+                    pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
                     title="Email contain @"
                     required
                     placeholder="email"

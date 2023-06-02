@@ -10,17 +10,16 @@ export const FoodList = ({ food, onClick }) => {
     }, [orderFood]);
 
     const handleClick = (item) => {
-        const checkId = orderFood.find(product => product.id === item.id);
+        const checkId = orderFood.find(product => product._id === item._id);
         if (checkId) {
             return toast.error('Have allready added. Go to your cart, please.')
         }
         setOrderFood([...orderFood, item])
         localStorage.setItem('order', JSON.stringify(orderFood))
-        console.log(orderFood)
 
     }
     return (
-        // <div><div><h1>Please, choose shop</h1></div>
+
         <FoodListStyle>{food.map(item => {
             return <FoodCard key={item._id} food={item} onClick={handleClick} />
         })}</FoodListStyle>
