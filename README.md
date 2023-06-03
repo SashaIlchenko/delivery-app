@@ -3,7 +3,7 @@
 About the app: 
 Frontend:
 This app was created from a template based on react create app. There are 2 pages with react router navigation connected. The first page is the store bar and the product list. The customer can filter the list of products by the selected store.   As long as he does not choose - will see the animation. 
-From the list you can add a product to cart and go to the second page - cart. Here the user can select the quantity, delete the product, see the total price and complete the order by filling in the form. Also autofill the address, the map is connected, but still in development. In the near future the map will show the selected area. 
+From the list you can add products to cart and go to the second page - cart. Here the user can select the quantity, delete the product, see the total price and complete the order by filling in the form. Also connected autofill address, which is displayed on the map after sending contacts, but the map is still under development and in the future will be able to select the address on the map.  
 
 Stack technologies and libraries:
 React, Git, emotion-styled,  axios ,formik, nanoid, router-dom and other.

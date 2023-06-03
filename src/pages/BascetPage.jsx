@@ -5,11 +5,6 @@ import { OrderList } from "components/orderList/OrderList";
 import { Map } from "components/Map/Map";
 import styled from "@emotion/styled";
 
-const defaultCenter = {
-    lat: -3.745,
-    lng: -38.523
-}
-
 const libraries = ['places']
 const BascetPage = () => {
     const { isLoaded } = useJsApiLoader({
@@ -18,7 +13,6 @@ const BascetPage = () => {
         libraries
     })
     const [submitData, setSubmitData] = useState(null);
-    // const [center, setCenter] = useState(defaultCenter)
     const onSubmit = (values) => {
         setSubmitData(values);
 
@@ -29,20 +23,12 @@ const BascetPage = () => {
     const Wrapper = styled.div`
     display: flex;
     flex-direction:column;`
-    // const onPlaceSelect = (coordinates) => {
-    //     setCenter(coordinates)
-    // }
-    // const onPlaceSelect = useCallback(
-    //     (coordinates) => {
-    //         setCenter(coordinates)
-    //     }, [coordinates],
-    // )
+
     return <Container>
         <OrderList user={submitData} />
         <Wrapper>
             <OrderForm onSubmit={onSubmit} isLoaded={isLoaded} />
-            {isLoaded ? <Map center={defaultCenter} /> : <h1>Map is loading...</h1>}</Wrapper>
-
+            {isLoaded ? <Map /> : <h1>Map is loading...</h1>}</Wrapper>
     </Container>
 }
 

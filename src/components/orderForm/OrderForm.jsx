@@ -41,7 +41,7 @@ export const OrderForm = ({ onSubmit, isLoaded }) => {
                 getGeocode({ address: description }).then((results) => {
                     const { lat, lng } = getLatLng(results[0]);
                     console.log({ lat, lng })
-
+                    localStorage.setItem('coords', JSON.stringify({ lat, lng }))
                 });
             };
 
